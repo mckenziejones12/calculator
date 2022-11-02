@@ -14,16 +14,18 @@ const previousOperationDisplay = document.getElementById("previousOperation");
 const currentOperationDisplay = document.getElementById("currentOperation");
 
 //add event listeners
-numberBtns.forEach((button) =>
-  button.addEventListener("click", () => numberChoice(button.textContent))
-);
-operatorBtns.forEach((button) =>
-  button.addEventListener("click", () => operatorChoice(button.textContent))
-);
+equalSign.addEventListener("click", compute);
 clearBtn.addEventListener("click", clear);
 delBtn.addEventListener("click", deleteBtn);
 decimal.addEventListener("click", appendDecimal);
-equalSign.addEventListener("click", compute);
+
+numberBtns.forEach((button) =>
+  button.addEventListener("click", () => numberChoice(button.textContent))
+);
+
+operatorBtns.forEach((button) =>
+  button.addEventListener("click", () => setOperation(button.textContent))
+);
 
 //clear function - clears display of any # or memory of operation
 function clear() {
@@ -31,7 +33,7 @@ function clear() {
   previousOperationDisplay.textContent = "";
   firstOperand = "";
   secondOperand = "";
-  currentOperation = "";
+  currentOperation = null;
 }
 
 //delete function - deletes the last digit in current operation
@@ -49,12 +51,12 @@ function numberChoice(number) {
 }
 
 //operator choice function
-function operatorChoice(operator) {
-  if (!!currentOperation) compute();
+function setOperation(operator) {
+  if (currentOperation !== null) compute();
   firstOperand = currentOperationDisplay.textContent;
   currentOperation = operator;
   previousOperationDisplay.textContent = `${firstOperand}${currentOperation}`;
-  shouldReset = true; //why???????!!!!!!!! *****************************************************
+  shouldReset = true;
 }
 
 //decimal function
@@ -69,9 +71,8 @@ function appendDecimal() {
 /*computation of number and operator - taking previous operand 
   as num1 and current operand as num2 */
 function compute() {
-  // debugger;
   if (currentOperation === null || shouldReset) return;
-  if (currentOperation === "&divide" && currentOperationDisplay === "0") {
+  if (currentOperation === "/" && currentOperationDisplay.textContent === "0") {
     alert("You can't divide by 0!");
     return;
   }
@@ -104,9 +105,13 @@ function multiply(num1, num2) {
 }
 //divide
 function divide(num1, num2) {
-  //condition ? ifTrue : ifFalse
-  return num2 === 0 ? "You can't divide by 0 dummy!" : num1 / num2;
+  if (num2 === 0) {
+    return null;
+  } else {
+    return num1 / num2;
+  }
 }
+
 //round result function
 function roundResult(number) {
   return Math.round(number * 1000) / 1000;
@@ -123,5 +128,3 @@ function operate(operator, num1, num2) {
   if (operator === "/") return divide(num1, num2);
   return null;
 }
-
-// console.log(operate("+", 3, 3));

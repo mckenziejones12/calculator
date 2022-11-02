@@ -17,14 +17,15 @@ body {
 .display {
   display: flex;
   align-content: flex-end;
-  justify-content: end;
+  justify-content: space-between;
   flex-direction: column;
   border: 1px solid black;
   margin-bottom: 20px;
   padding: 10px;
   background-color: whitesmoke;
+  min-height: 60px;
 }
-.equation {
+.previousOperation {
   display: flex;
   flex-direction: row;
   margin: 0px 0px 10px 0px;
@@ -32,7 +33,7 @@ body {
   align-items: flex-start;
 }
 
-.total {
+.currentOperation {
   display: flex;
   flex-direction: row;
   margin: 0px;
@@ -52,7 +53,7 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 .number-operatorButtons {
@@ -65,8 +66,16 @@ button {
   border-radius: 30%;
   background-color: thistle;
   padding: 3px;
+  border: 1.5px solid black;
+  min-height: 40px;
 }
 
 #equalSign {
   background-color: cornflowerblue;
+  border: 1.5px solid yellow;
+  color: yellow;
+}
+#clear,
+#delete {
+  min-width: 80px;
 }
